@@ -7,6 +7,7 @@ import tricolor.no1.Server.spaces.spacesServerImpl;
 import tricolor.no1.model.Result;
 import tricolor.no1.model.User;
 import tricolor.no1.model.spaces;
+import tricolor.no1.util.spacesUtils;
 
 @RestController
 @RequestMapping("/spaces")
@@ -24,6 +25,20 @@ public class spacesController {
         spacesQueryWrapper.eq("author",user);
         spaces userSpace = spacesServer.getOne(spacesQueryWrapper);
         return Result.success(userSpace);
+    }
+    //更改改账号的空间信息
+    @PostMapping("/UpdatedSpacesData")
+    public Result UpdatedData(@RequestBody spaces spacess)
+    {
+        spaces spaces = spacesUtils.NullSpaces(spacess);
+        QueryWrapper<spaces> spacesQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<spaces> author = spacesQueryWrapper.eq("author", spacess.author);
+        boolean update = spacesServer.update(spaces, author);
+        if (update)
+        {
+            return Result.success("更新成功");
+        }
+        return Result.fail("更新失败,请稍后再试");
     }
 
 }

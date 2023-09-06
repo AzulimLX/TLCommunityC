@@ -14,6 +14,8 @@ public class spaces {
 
     public String author;
 
+    public String username;
+
     public String content;
 
     public String bili;
