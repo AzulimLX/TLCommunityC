@@ -2,6 +2,7 @@ package tricolor.no1.Controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -41,9 +42,9 @@ public class UserController {
     {
         //根据前端的请求头获取
         String authorization1 = request.getHeader("Authorization");
-        System.out.println(authorization1);
         if (authorization1 == null)
         {
+            response.setStatus(401);
             return Result.fail("没有授权，请登录后再试");
         }
         else
@@ -55,7 +56,6 @@ public class UserController {
                 {
                     //存在则找token的对应用户信息
                     User user = (User)redisTemplate.opsForValue().get(authorization1);
-                    System.out.println(user.getPhoto());
                     user.setPassword("xxxxxxxx");
                     user.setPhoneNumber("xxxxxxx");
                     return Result.success(user,"查询成功");
@@ -68,6 +68,16 @@ public class UserController {
             return Result.fail("redis没有连接，请通知管理员");
         }
 
+    }
+
+    @GetMapping("/user/GetById")
+    public Result GetById(@RequestParam("user") String id)
+    {
+        //直接查库
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("user",id);
+        User result = userServer.getOne(userQueryWrapper);
+        return Result.success(result);
     }
 
     //刷新token
@@ -96,7 +106,6 @@ public class UserController {
                   TokenMap.put("token",token);
                   TokenMap.put("refreshtoken",NewReToken);
                   String s = JSON.toJSONString(TokenMap);
-                  System.out.println("成功刷新了token哦");
                   return Result.success(s,"刷新token成功");
               }
 
