@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import tricolor.no1.DTO.SpacesDTO;
 import tricolor.no1.Enum.Status.status;
 import tricolor.no1.Mapper.spacesMapper;
 import tricolor.no1.Server.spaces.spacesServerImpl;
@@ -40,13 +41,10 @@ public class spacesController {
     @GetMapping("UserSpacesData")
     public Result AllData(@RequestParam(name = "user") String user)
     {
-        //使用user联合查询,但好像也不用
-        QueryWrapper<spaces> spacesQueryWrapper = new QueryWrapper<>();
-        spacesQueryWrapper.eq("author",user);
-        spaces userSpace = spacesServer.getOne(spacesQueryWrapper);
-        return Result.success(userSpace);
+        //更新:使用user联合查询,
+        SpacesDTO spacesData = spacesMappers.getSpacesData(user);
+        return Result.success(spacesData);
     }
-
     //更改改账号的空间信息
     @PostMapping("/UpdatedSpacesData")
     public Result UpdatedData(@RequestBody spaces spacess,
