@@ -1,25 +1,20 @@
 package tricolor.no1.Controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import tricolor.no1.DTO.SpacesDTO;
-import tricolor.no1.Enum.Status.status;
-import tricolor.no1.Mapper.spacesMapper;
+import tricolor.no1.Mapper.SpacesMapper;
 import tricolor.no1.Server.spaces.spacesServerImpl;
 import tricolor.no1.model.Result;
-import tricolor.no1.model.User;
-import tricolor.no1.model.spaces;
+import tricolor.no1.model.Spaces;
 import tricolor.no1.util.RedisIsConnectUtil;
 import tricolor.no1.util.spacesUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.lang.reflect.Field;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 @RestController
 @RequestMapping("/spaces")
@@ -29,7 +24,7 @@ public class spacesController {
     private spacesServerImpl spacesServer;
 
     @Autowired
-    private spacesMapper spacesMappers;
+    private SpacesMapper spacesMappers;
 
     @Resource
     private RedisTemplate<String,Object> redisTemplate;
@@ -47,11 +42,11 @@ public class spacesController {
     }
     //更改改账号的空间信息
     @PostMapping("/UpdatedSpacesData")
-    public Result UpdatedData(@RequestBody spaces spacess,
+    public Result UpdatedData(@RequestBody Spaces spacess,
                               HttpServletRequest request,
                               HttpServletResponse response)
     {
-        spaces Spaces = spacesUtils.NullSpaces(spacess);
+        Spaces Spaces = spacesUtils.NullSpaces(spacess);
         //更新需要进行联表更新，使用Mapper
         int update = spacesMappers.updatedUserAndSpace(Spaces);
         //TODO 而我们在redis中获取用户信息，本来则需要在redis里也进行更新,这里进行一个偷懒，感觉不需要
@@ -64,6 +59,13 @@ public class spacesController {
             return Result.fail("出现不明原因，更新失败");
         }
 
+    }
+
+    @GetMapping("AllSpacesData")
+    public Result getAllSpaces()
+    {
+        List<SpacesDTO> allSpaces = spacesMappers.getAllSpaces();
+        return Result.success(allSpaces);
     }
 
 }

@@ -1,6 +1,5 @@
 package tricolor.no1.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("article")
-public class article {
+public class Place {
+    public String name;
 
-    public Integer id;
-
-    public String title;
+    public String photo;
 
     public String content;
 
-    public String author;
+    public String mapname;
+
+    public String coordinate;
+
+    public String adcode;
+
 }

@@ -3,7 +3,6 @@ package tricolor.no1;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -14,16 +13,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import tricolor.no1.DTO.danDTO;
 import tricolor.no1.Mapper.UserMapper;
-import tricolor.no1.Mapper.danMapper;
+import tricolor.no1.Mapper.DanMapper;
 import tricolor.no1.Server.User.UserServer;
+import tricolor.no1.Server.WorldMsg.WorldMsgServerImpl;
 import tricolor.no1.Server.amap.amapServerImpl;
 import tricolor.no1.Server.dan.danServer;
 import tricolor.no1.Server.place.placeServer;
-import tricolor.no1.model.User;
-import tricolor.no1.model.dan;
-import tricolor.no1.model.place;
+import tricolor.no1.model.WorldMsg;
+import tricolor.no1.model.Dan;
+import tricolor.no1.model.Place;
 import tricolor.no1.util.TimeUtil;
 
 import javax.annotation.Resource;
@@ -50,14 +49,14 @@ class No1ApplicationTests {
     void lin()
     {
         //首先获取所有信息
-        List<place> list = placeserver.list();
+        List<Place> list = placeserver.list();
         //我们确定需要返回JSON格式的数据，所以我们需要思考，怎么构造JSON才合理
 
         //[xxx:xxx][xxx:xxxx][][]这种吧，所以需要返回一个列表，列表内是JSON
         //而我们知道，JOSN格式需要map进行转化，而我们需要一个列表装这个map，每个map为一个对象
         //进行构造
         List<Map<String,Object>> Map = new ArrayList<>();
-        for (place p : list)
+        for (Place p : list)
         {
             HashMap<String, Object> map = new HashMap<>();
             map.put("name",p.name);
@@ -193,7 +192,7 @@ class No1ApplicationTests {
     @Test
     void timeText()
     {
-        dan dan = new dan();
+        Dan dan = new Dan();
         dan.setId(9);
         dan.setAuthor("1234567");
         dan.setContent("歌声好像明媚的春光");
@@ -202,7 +201,7 @@ class No1ApplicationTests {
     }
 
     @Autowired
-    public danMapper danMapperr;
+    public DanMapper danMapperr;
     @Test
     void testss(){
         CloseableHttpClient client = HttpClients.createDefault();
@@ -261,13 +260,22 @@ class No1ApplicationTests {
     @Autowired
     amapServerImpl amapServer;
 
+
+    @Autowired
+    WorldMsgServerImpl worldMsgServer;
     @Test
-    void Tests()
+    void Testss()
     {
-        //查找天气
-        String s = amapServer.GetNowWeather("440000");
-        System.out.println(s);
+       //
+        WorldMsg worldMsg = new WorldMsg();
+        worldMsg.setMsg("测试数据1号");
+        worldMsg.setFromUser("1234567");
+        worldMsgServer.save(worldMsg);
     }
+
+
+    //进行一个世界数据插入
+
 
 }
 

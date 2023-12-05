@@ -1,13 +1,13 @@
 package tricolor.no1.util;
 
-import tricolor.no1.model.spaces;
+import tricolor.no1.model.Spaces;
 
 public class spacesUtils {
 
     /*
     *
     * */
-    public static spaces NullSpaces(spaces s)
+    public static Spaces NullSpaces(Spaces s)
     {
         if (s.bili=="" || s.bili == " ")
         {

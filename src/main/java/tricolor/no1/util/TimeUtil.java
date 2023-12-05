@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeUtil {
-    public static Date getNowTime()
+    public static String getNowTime()
     {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String currentSimpleDateFormat = simpleDateFormat.format(date);
-        return date;
+        return currentSimpleDateFormat;
     }
 
     public static java.sql.Date getSqlDate()

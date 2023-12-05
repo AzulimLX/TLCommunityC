@@ -5,10 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tricolor.no1.Server.amap.amapServerImpl;
-import tricolor.no1.Server.article.articleServer;
 import tricolor.no1.Server.place.placeServer;
 import tricolor.no1.model.Result;
-import tricolor.no1.model.place;
+import tricolor.no1.model.Place;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,14 +30,14 @@ public class AmapController {
        public Result GetStaticPlace()
        {
            //首先获取所有信息
-           List<place> list = placeserver.list();
+           List<Place> list = placeserver.list();
            //我们确定需要返回JSON格式的数据，所以我们需要思考，怎么构造JSON才合理
 
            //[xxx:xxx][xxx:xxxx][][]这种吧，所以需要返回一个列表，列表内是JSON
            //而我们知道，JOSN格式需要map进行转化，而我们需要一个列表装这个map，每个map为一个对象
            //进行构造
            List<Map<String,Object>> Map = new ArrayList<>();
-           for (place p : list)
+           for (Place p : list)
            {
                HashMap<String, Object> map = new HashMap<>();
                map.put("name",p.name);

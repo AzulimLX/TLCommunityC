@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import tricolor.no1.DTO.articleDTO;
-import tricolor.no1.model.article;
+import tricolor.no1.model.Article;
 
 @Mapper
-public interface articleMapper extends BaseMapper<article> {
+public interface ArticleMapper extends BaseMapper<Article> {
     //对于文章内容，与User进行联表查询
     @Select("SELECT a.* ,u.username,u.photo " +
             "FROM article a " +

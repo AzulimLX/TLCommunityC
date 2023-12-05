@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class dan {
+public class Dan {
     @TableId(value = "id", type = IdType.AUTO)
     public Integer id;
 

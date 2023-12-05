@@ -1,5 +1,6 @@
-package tricolor.no1.DTO;
+package tricolor.no1.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class articleDTO {
-
-    String username;
-
-    String photo;
+@TableName("Article")
+public class Article {
 
     public Integer id;
 

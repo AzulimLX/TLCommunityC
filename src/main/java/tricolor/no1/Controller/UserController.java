@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -137,6 +138,13 @@ public class UserController {
         //连接失败
         return Result.fail("redis没有连接，请通知管理员再进行操作");
 
+    }
+
+    @GetMapping("/user/GetAllUser")
+    public Result GetAllUser()
+    {
+        List<User> user = userServer.getUser();
+        return Result.success(user);
     }
 
 }
