@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tricolor.no1.util.TimeUtil;
 
 import java.util.Date;
 
@@ -23,5 +24,11 @@ public class Friend {
 
     @TableField("create_time")
     Date createTime;
+
+    public Friend(String mainId,String friendId){
+        this.mainId = mainId;
+        this.friendId = friendId;
+        this.createTime = TimeUtil.getSqlDate();
+    }
 
 }
